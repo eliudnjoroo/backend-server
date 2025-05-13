@@ -14,10 +14,10 @@ const { get_all_in_cart } = require("./backend/activities/retrieve.activity.js")
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.use("/",express.static(process.cwd()+"/frontend/"));
+//app.use("/",express.static(process.cwd()+"/frontend/"));
 app.use("/alien/details/",express.static(process.cwd()+"/backend/images/"));
 app.use("/",express.static(process.cwd()+"/backend/images/products/"));
-app.get("/",(req,res)=>{ res.status(200).sendFile(process.cwd()+'/frontend/index.html') });
+//app.get("/",(req,res)=>{ res.status(200).sendFile(process.cwd()+'/frontend/index.html') });
 
 /* all user paths */
 app.get("/user/checkphone/:phone",find_user_by_phone);
