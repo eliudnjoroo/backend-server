@@ -6,7 +6,6 @@ const get_all_in_cart = async(req, res) => {
     Product.find({ user: active_user })
     .then( db_res => {
         res.json({ success: "true", data: db_res })
-        console.log("all products: ",db_res);
     })
     .catch( err => { res.json({ success: "false", error: err})})
 }
