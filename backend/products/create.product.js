@@ -42,7 +42,7 @@ const save_image_to_system = async (req, res) => {
 
 // 5. Create Product Handler
 const create_new_valid_product = async (req, res) => {
-    const { category, user, account, name, price, image, quantity, more, link } = req.body;
+    const { category, user, account, name, price, image, quantity, more, link, public_id } = req.body;
 
     const product = new Product({
         category,
@@ -54,6 +54,7 @@ const create_new_valid_product = async (req, res) => {
         quantity,
         more,
         link,
+        public_id,
     });
 
     try {

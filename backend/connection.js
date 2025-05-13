@@ -50,6 +50,7 @@ const productSchema = new mongoose.Schema({
     price: { type: Number, required: true },
     quantity: { type: Number, required: true },
     image: { type: String, required: true, default: "no image" },
+    public_id: { type: String, required: true, default: "no public id" },
     category: { type: String, required: true, default: "main products" },
     more: {
         name: { type: String, required: true },
