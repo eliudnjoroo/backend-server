@@ -1,3 +1,5 @@
+const HOST_URL = "https://eliud-backend-server.onrender.com"
+
 const Product = require("../connection.js").productColl
 const multer = require('multer');
 const path = require('path');
@@ -16,7 +18,7 @@ const upload = multer({ storage: storage });
 //for adding the product details in the database
 const create_new_valid_product = async (req, res)=>{
     const { category, user, account, name, price, image, quantity, more, link } = req.body;
-    const path = "https://localhost:1000//"+image;
+    const path = `${HOST_URL}`+image;
     const product = new Product({
         category,
         user,
