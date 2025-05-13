@@ -1,0 +1,5 @@
+node_modules
+backend/images
+.env
+localhost+3-key.pem
+localhost+3.pem
