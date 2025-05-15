@@ -4,7 +4,7 @@
   "description": "server for best shop ",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "author": "eliud njoroo",
   "license": "ISC",

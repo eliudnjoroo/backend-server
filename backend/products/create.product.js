@@ -76,7 +76,7 @@ module.exports = {
 
 
 
-//outdated
+//for dev
 /*
 const HOST_URL = "https://eliud-backend-server.onrender.com"
 

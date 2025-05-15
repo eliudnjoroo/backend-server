@@ -9,6 +9,7 @@ const { create_new_valid_product, save_image_to_system, save_image_to_system_mid
 const { get_products_for_display, get_product_for_display } = require("./backend/products/display.product.js");
 const { create_activity_new_user, add_cart_activity, remove_cart_activity, check_if_in_cart } = require("./backend/activities/create.activity.js");
 const { get_all_in_cart } = require("./backend/activities/retrieve.activity.js")
+const { create_new_category, delete_old_category, update_old_category, find_all_category } = require("./backend/products/product.category.js")
 
 /* all middlewares and main path */
 app.use(cors());
@@ -29,6 +30,10 @@ app.get("/alien/details/:user", fetch_user_details );
 app.post("/acc/:uname/:fname/:lname/:email/:number/:pass1", create_new_valid_user );
 
 /* all product paths */
+app.get("/api/category/find/all", find_all_category );
+app.post("/api/category/add/:category", create_new_category );
+app.get("/api/category/delete/:category", delete_old_category );
+app.get("/api/category/update/:old_category/:new_category", update_old_category );
 app.post("/api/product/new", create_new_valid_product );
 app.post("/api/image/save", save_image_to_system_middle_ware, save_image_to_system);
 app.get("/api/product/getproducts", get_products_for_display );
@@ -41,7 +46,7 @@ app.post("/api/activity/cart/remove/:active_user/:item", remove_cart_activity );
 app.get("/api/activity/cart/check/:active_user/:item", check_if_in_cart );
 app.get("/api/activity/cart/getall/:active_user", get_all_in_cart );
 
-// ssl/tsl certifictes for https local validation
+//ssl/tsl certifictes for https local validation
 // const options = {
 //   key: fs.readFileSync(process.cwd()+'/localhost+3-key.pem'),    // your private key
 //   cert: fs.readFileSync(process.cwd()+'/localhost+3.pem')   // your certificate
