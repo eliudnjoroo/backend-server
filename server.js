@@ -46,6 +46,11 @@ app.post("/api/activity/cart/remove/:active_user/:item", remove_cart_activity );
 app.get("/api/activity/cart/check/:active_user/:item", check_if_in_cart );
 app.get("/api/activity/cart/getall/:active_user", get_all_in_cart );
 
+/* for ping to keep backend alive*/
+app.get("/health",(req, res) => { 
+  res.send(cool); console.log("pinged:=> succefull")
+});
+
 //ssl/tsl certifictes for https local validation
 // const options = {
 //   key: fs.readFileSync(process.cwd()+'/localhost+3-key.pem'),    // your private key
