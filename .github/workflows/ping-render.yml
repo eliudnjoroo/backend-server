@@ -1,9 +1,9 @@
 name: Keep Render App Awake
 
-# Run the workflow on a schedule
 on:
   schedule:
     - cron: '*/5 * * * *'   # every 5 minutes
+  workflow_dispatch:         # allow manual runs from GitHub UI
 
 jobs:
   ping:
@@ -11,7 +11,6 @@ jobs:
     steps:
       - name: Ping Render health endpoint
         run: |
-          # Try to hit /health (or root) and fail if non-200
           curl --fail https://eliud-backend-server.onrender.com/health \
             && echo "✅ Ping successful" \
             || echo "❌ Ping failed"
