@@ -48,7 +48,7 @@ app.get("/api/activity/cart/getall/:active_user", get_all_in_cart );
 
 /* for ping to keep backend alive*/
 app.get("/health",(req, res) => { 
-  res.send(cool); console.log("pinged:=> succefull")
+  res.json({ cool: "pinged:=> succefull"}); console.log("pinged:=> succefull");
 });
 
 //ssl/tsl certifictes for https local validation
