@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
 
+const categoryScema = new mongoose.Schema({
+    category_name: { type: String, required: true, unique:true }
+}, { timestamps: true })
+const categoryColl = new mongoose.model("Category", categoryScema);
 
 const activitySchema = new mongoose.Schema({
     user: { type: String, required: true, unique: true },
@@ -10,7 +14,7 @@ const activitySchema = new mongoose.Schema({
         product_name: { type: String, required: true, default: "nothing" },
         product_count: { type: Number, required: true, default: 0 },
     }],
-    orders: { 
+    orders: {
         count: { type: Number, required: true, default: 0 },
         orders: [{
             _id: { type: String, required: true, default: "nothing" },
@@ -89,4 +93,4 @@ mongoose.connect(process.env.CONNECTION_URI)
     });
 
 
-module.exports = { userColl, productColl, activityColl }
+module.exports = { userColl, productColl, activityColl, categoryColl }
