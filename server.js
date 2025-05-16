@@ -48,6 +48,17 @@ app.get("/api/activity/cart/getall/:active_user", get_all_in_cart );
 app.get("/api/cart/count/:user/:product/:action", update_cart_item_count );
 app.get("/api/cart/clear/:user", clear_cart );
 
+app.get("/health/:source", (req, res) => {
+  res.json({ cool: "pinged:=> succefull" });
+  console.log("pinged:=> succefull, source: " + req.params.source);
+});
+
+app.get('/client', (req, res) => {
+  const ip = req.headers['x-forwarded-for']?.split(',').shift() || req.socket?.remoteAddress;
+  console.log('Client IP:', ip);
+  res.json({ message: `your_IP_is: => ${ip}`});
+});
+
 //ssl/tsl certifictes for https local validation
 // const options = {
 //   key: fs.readFileSync(process.cwd()+'/localhost+3-key.pem'),    // your private key
