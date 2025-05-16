@@ -18,13 +18,9 @@ const check_if_in_cart = (req, res) => {
                 data.cart.forEach(found_item => {
                     if (found_item.product_name == item) {
                         available = "yess"
-                        console.log("data from cart2 : " + found_item.product_name);
-                        console.log("available0 : " + available);
                     }
                 });
-                console.log("available1 : " + available);
             }
-            console.log("available2 : " + available);
             res.json({ present: available })
         })
         .catch(err => { res.json({ success: "full false", error: err }) })

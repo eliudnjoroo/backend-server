@@ -86,7 +86,7 @@ const userColl = mongoose.model("Userdata", userSchema);
 
 mongoose.connect(process.env.CONNECTION_URI)
     .then(() => {
-        console.log("mongodb connected successfully to users database.")
+        console.log("mongodb connected successfully.")
     })
     .catch((err) => {
         console.log("ERR: mongodb not connected successfully" + err)

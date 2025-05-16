@@ -2,7 +2,6 @@ const Product = require("../connection").activityColl
 
 const get_all_in_cart = async(req, res) => {
     const { active_user } = req.params;
-    console.log("username: ",active_user);
     Product.find({ user: active_user })
     .then( db_res => {
         res.json({ success: "true", data: db_res })

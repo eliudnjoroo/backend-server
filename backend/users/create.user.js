@@ -39,6 +39,7 @@ const create_new_valid_user = (req,res)=>{
       profile: "https://localhost:1000/alien/details/defaults/defaultprofile.webp"
     })
     user.save();
+    console.log(uname+" created account succefully")
     res.status(201).json({ message: `welcome ${uname}, your account was created succefully. you can now login.` });
 }
 

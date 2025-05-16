@@ -5,11 +5,15 @@ const log_in_user = (req, res)=>{
   const { uNameL, uPassL } = req.params
   User.find({ username : `${uNameL}`, password: `${uPassL}`})
   .then(response=>{
-    if(response.length > 0){res.json({ credentials: "correct" });}
-    else{res.json({ credentials: "wrong" });}
+    if(response.length > 0){
+      res.json({ credentials: "correct" });
+      console.log(uNameL+" was logged in")
+    }
+    else{
+      res.json({ credentials: "wrong" });
+      console.log(uNameL+" was not allowes to logged in")
+    }
   })
-  console.log("\n loged in: \napi called and method "+req.method+" "+" "+req.protocol+"://"+req.host+req.url)
-  console.log("got me from(origin) "+req.headers.origin)
 }
 
 //logging out user
@@ -18,8 +22,7 @@ const log_out_user =async (req, res)=>{
   const user = req.params.user
   await User.findOneAndUpdate({ username: `${user}` }, { last_logout: mydate, logged: false }, {new: true })
   .then( ans=>{
-    console.log("\n logged out: \napi called and method "+req.method+" "+" "+req.protocol+"://"+req.host+req.url)
-    console.log("got me from(origin) "+req.headers.origin)
+    console.log(user+" logged out at "+mydate)
     res.json({ updated: "true" })}
   )
   .catch(err=>{console.log("error seting logged to false: "+err); res.json({ updated: "false" })})
@@ -34,8 +37,7 @@ const fetch_user_details = (req, res)=>{
         const date= new Date();
         await User.findOneAndUpdate({ username: `${user}` }, { last_login: date, logged: true }, { new: true })
         .then((dat)=>{
-            console.log("\n refreshed: \napi called and method "+req.method+" "+" "+req.protocol+"://"+req.host+req.url)
-            console.log("got me from(origin) "+req.headers.origin)
+            console.log(user+" fetched his profile details")
           }
         );
         res.json({ userdetails: response });
