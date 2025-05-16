@@ -7,6 +7,7 @@ const create_new_category = (req, res) => {
   })
   categ.save()
     .then(() => {
+      console.log(category+" category was created")
       res.json({ success: "true", message: "category saved" });
     })
     .catch(err => res.json({ success: "false", message: "category not saved", fatError: err }));
@@ -16,6 +17,7 @@ const delete_old_category = (req, res) => {
   const { category } = req.params
   Category.findOneAndDelete({ category_name: category })
     .then(() => {
+      console.log(category+" category was deleted")
       res.json({ success: "true", message: "category deleted" });
     })
     .catch(err => res.json({ success: "false", message: "category not deleted", fatError: err }));
@@ -27,6 +29,7 @@ const update_old_category = (req, res) => {
     { category_name: new_category },
     { new: true })
     .then(() => {
+      console.log(old_category+" category was updated to "+new_category)
       res.json({ success: "true", message: "category updated", old_name: `${old_category}`, new_name: `${new_category}` });
     })
     .catch(err => res.json({ success: "false", message: "category not updated", fatError: err }));
@@ -35,6 +38,7 @@ const update_old_category = (req, res) => {
 const find_all_category = (req, res) => {
   Category.find({})
     .then(( all_data ) => {
+      console.log("all categories fetched")
       res.json({ success: "true", message: "all category fetched", data: all_data });
     })
     .catch(err => res.json({ success: "false", message: "category not updated", fatError: err }));

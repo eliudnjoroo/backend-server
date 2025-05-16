@@ -10,15 +10,14 @@ const { get_products_for_display, get_product_for_display } = require("./backend
 const { create_activity_new_user, add_cart_activity, remove_cart_activity, check_if_in_cart } = require("./backend/activities/create.activity.js");
 const { get_all_in_cart } = require("./backend/activities/retrieve.activity.js")
 const { create_new_category, delete_old_category, update_old_category, find_all_category } = require("./backend/products/product.category.js")
+const { update_cart_item_count, clear_cart } = require("./backend/activities/update.count.js")
 
 /* all middlewares and main path */
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-//app.use("/",express.static(process.cwd()+"/frontend/"));
 app.use("/alien/details/",express.static(process.cwd()+"/backend/images/"));
 app.use("/",express.static(process.cwd()+"/backend/images/products/"));
-//app.get("/",(req,res)=>{ res.status(200).sendFile(process.cwd()+'/frontend/index.html') });
 
 /* all user paths */
 app.get("/user/checkphone/:phone",find_user_by_phone);
@@ -45,18 +44,20 @@ app.post("/api/activity/cart/add/:active_user/:item/:count", add_cart_activity )
 app.post("/api/activity/cart/remove/:active_user/:item", remove_cart_activity );
 app.get("/api/activity/cart/check/:active_user/:item", check_if_in_cart );
 app.get("/api/activity/cart/getall/:active_user", get_all_in_cart );
+app.get("/api/cart/count/:user/:product/:action", update_cart_item_count );
+app.get("/api/cart/clear/:user", clear_cart );
 
 //ssl/tsl certifictes for https local validation
-// const options = {
-//   key: fs.readFileSync(process.cwd()+'/localhost+3-key.pem'),    // your private key
-//   cert: fs.readFileSync(process.cwd()+'/localhost+3.pem')   // your certificate
-// };
+const options = {
+  key: fs.readFileSync(process.cwd()+'/localhost+3-key.pem'),    // your private key
+  cert: fs.readFileSync(process.cwd()+'/localhost+3.pem')   // your certificate
+};
 
-// // starting ap with https connection
-// https.createServer(options, app).listen(1000, () => {
-//   console.log('HTTPS server running on https://localhost:1000');
-// });
-
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Server is running on port ${process.env.PORT || 3000}`);
+// starting ap with https connection
+https.createServer(options, app).listen(1000, () => {
+  console.log('HTTPS server running on https://localhost:1000');
 });
+
+// app.listen(process.env.PORT || 3000, () => {
+//   console.log(`Server is running on port ${process.env.PORT || 3000}`);
+// });
