@@ -66,23 +66,6 @@ app.get('/client', (req, res) => {
 });
 
 //ssl/tsl certifictes for https local validation
-const options = {
-  key: fs.readFileSync(process.cwd()+'/localhost+3-key.pem'),    // your private key
-  cert: fs.readFileSync(process.cwd()+'/localhost+3.pem')   // your certificate
-};
-
-// starting ap with https connection
-https.createServer(options, app).listen(1000, () => {
-  console.log('HTTPS server running on https://localhost:1000');
-});
-
-app.get('/client', (req, res) => {
-  const ip = req.headers['x-forwarded-for']?.split(',').shift() || req.socket?.remoteAddress;
-  console.log('Client IP:', ip);
-  res.json({ message: `your_IP_is: => ${ip}`});
-});
-
-//ssl/tsl certifictes for https local validation
 // const options = {
 //   key: fs.readFileSync(process.cwd()+'/localhost+3-key.pem'),    // your private key
 //   cert: fs.readFileSync(process.cwd()+'/localhost+3.pem')   // your certificate
