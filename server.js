@@ -10,7 +10,8 @@ const { get_products_for_display, get_product_for_display } = require("./backend
 const { create_activity_new_user, add_cart_activity, remove_cart_activity, check_if_in_cart } = require("./backend/activities/create.activity.js");
 const { get_all_in_cart } = require("./backend/activities/retrieve.activity.js")
 const { create_new_category, delete_old_category, update_old_category, find_all_category } = require("./backend/products/product.category.js")
-const { update_cart_item_count, clear_cart } = require("./backend/activities/update.count.js")
+const { update_cart_item_count, clear_cart } = require("./backend/activities/update.count.js");
+const { create_new_order, cancel_old_order } = require("./backend/orders/create.order.js");
 
 /* all middlewares and main path */
 app.use(cors());
@@ -47,6 +48,10 @@ app.get("/api/activity/cart/check/:active_user/:item", check_if_in_cart );
 app.get("/api/activity/cart/getall/:active_user", get_all_in_cart );
 app.get("/api/cart/count/:user/:product/:action", update_cart_item_count );
 app.get("/api/cart/clear/:user", clear_cart );
+
+/* all order paths */
+app.get("/api/order/create/:username/:date/:quantity/:total/:discount/:net/:tax/:cost/:location/:contacts", create_new_order );
+app.get("/api/order/create/:username/:order_id", cancel_old_order );
 
 app.get("/health/:source", (req, res) => {
   res.json({ cool: "pinged:=> succefull" });

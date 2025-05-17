@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const categoryScema = new mongoose.Schema({
-    category_name: { type: String, required: true, unique:true }
+    category_name: { type: String, required: true, unique: true }
 }, { timestamps: true })
 const categoryColl = new mongoose.model("Category", categoryScema);
 
@@ -17,18 +17,35 @@ const activitySchema = new mongoose.Schema({
     orders: {
         count: { type: Number, required: true, default: 0 },
         orders: [{
-            _id: { type: String, required: true, default: "nothing" },
-            number: { type: Number, required: true, default: 0 },
+            order_id: { type: Number, required: true, default: 0 },
             date1: { type: String, required: true, default: "nothing" },
             date2: { type: String, required: true, default: "nothing" },
             date3: { type: String, required: true, default: "nothing" },
+            snapshot: {
+                quantity: { type: Number, required: true, default: 0 },
+                total: { type: Number, required: true, default: 0 },
+                discount: { type: Number, required: true, default: 0 },
+                net: { type: Number, required: true, default: 0 },
+                tax: { type: Number, required: true, default: 0 },
+                cost: { type: Number, required: true, default: 0 },
+                location: {
+                    country: { type: String, required: true, default: 0 },
+                    county: { type: String, required: true, default: 0 },
+                    town: { type: String, required: true, default: 0 },
+                    stage: { type: String, required: true, default: 0 },
+                },
+                contacts: {
+                    cust_phone: { type: String, required: true, default: 0 },
+                    cust_email: { type: String, required: true, default: 0 },
+                },
+            },
             items: [{
                 product_name: { type: String, required: true, default: "nothing" },
                 product_count: { type: String, required: true, default: "nothing" },
             }],
         }],
         pending: [{
-            _id: { type: String, required: true, default: "nothing" },
+            order_id: { type: String, required: true, default: "nothing" },
             status: { type: String, required: true, default: "nothing" }
         }],
         delivrly: [{

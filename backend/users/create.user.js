@@ -60,6 +60,8 @@ const find_user_by_mail = async (req, res) => {
 // function for creating the validatet new user
 const create_new_valid_user = (req, res) => {
   const { uname, fname, lname, email, number, pass1, profile } = req.params
+  const profile_pic_url = `https://res.cloudinary.com/dywlkeqqx/image/upload/v1747462695/users/${profile}`
+  console.log(req.params);
   const user = new User({
     username: uname,
     first_name: fname,
@@ -67,7 +69,7 @@ const create_new_valid_user = (req, res) => {
     email: email,
     number: number,
     password: pass1,
-    profile: profile
+    profile: profile_pic_url,
   })
   user.save();
   console.log(uname + " created account succefully")
