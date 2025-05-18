@@ -15,9 +15,17 @@ cloudinary.config({
 // 2. Setup Multer + Cloudinary storage
 const storage = new CloudinaryStorage({
     cloudinary,
-    params: {
-        folder: "products", // folder in your Cloudinary account
-        allowed_formats: ["jpg", "png", "jpeg"],
+    params: async (req, file) => {
+        const baseName = file.originalname.split('.')[0];
+        return {
+            folder: "products", // folder in your Cloudinary account
+            public_id: baseName,
+            use_filename: true,
+            unique_filename: false,
+            overwrite: true,
+            resource_type: "image",
+            allowed_formats: ["jpg", "png", "jpeg"],
+        }
     },
 });
 const upload = multer({ storage });
@@ -26,16 +34,17 @@ const upload = multer({ storage });
 const save_image_to_system_middle_ware = upload.single("upfile");
 
 // 4. Image Upload Handler
+const formated = "f_auto,q_auto"
 const save_image_to_system = async (req, res) => {
     if (!req.file) {
         return res.status(400).json({ success: false, message: "No file uploaded" });
     }
-
+    const product = req.file.path.split("/").pop();
     // req.file.path is the full hosted URL on Cloudinary
     res.json({
         success: true,
         message: "File uploaded",
-        url: req.file.path,        // URL for frontend use
+        url: `https://res.cloudinary.com/dywlkeqqx/image/upload/${formated}/v1747462695/products/${product}`,        // URL for frontend use
         public_id: req.file.filename // For future deletions if needed
     });
 };
@@ -73,7 +82,7 @@ module.exports = {
     create_new_valid_product,
 };
 
- 
+
 
 
 
