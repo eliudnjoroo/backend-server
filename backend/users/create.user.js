@@ -11,9 +11,17 @@ cloudinary.config({
 });
 const storage = new CloudinaryStorage({
   cloudinary,
-  params: {
-    folder: "users",
-    allowed_formats: ["jpg", "jpeg", "png"],
+  params: async (req, file) => {
+    const baseName = file.originalname.split('.')[0];
+    return {
+      folder: "products", // folder in your Cloudinary account
+      public_id: baseName,
+      use_filename: true,
+      unique_filename: false,
+      overwrite: true,
+      resource_type: "image",
+      allowed_formats: ["jpg", "png", "jpeg"],
+    }
   },
 });
 const upload = multer({ storage })
@@ -60,7 +68,8 @@ const find_user_by_mail = async (req, res) => {
 // function for creating the validatet new user
 const create_new_valid_user = (req, res) => {
   const { uname, fname, lname, email, number, pass1, profile } = req.params
-  const profile_pic_url = `https://res.cloudinary.com/dywlkeqqx/image/upload/v1747462695/users/${profile}`
+  const formated = "f_auto,q_auto,w_150,h-150,c_fill"
+  const profile_pic_url = `https://res.cloudinary.com/dywlkeqqx/image/upload/${formated}/v1747462695/users/${profile}`
   console.log(req.params);
   const user = new User({
     username: uname,
