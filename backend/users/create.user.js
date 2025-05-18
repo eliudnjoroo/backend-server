@@ -14,7 +14,7 @@ const storage = new CloudinaryStorage({
   params: async (req, file) => {
     const baseName = file.originalname.split('.')[0];
     return {
-      folder: "products", // folder in your Cloudinary account
+      folder: "users", // folder in your Cloudinary account
       public_id: baseName,
       use_filename: true,
       unique_filename: false,
@@ -68,8 +68,10 @@ const find_user_by_mail = async (req, res) => {
 // function for creating the validatet new user
 const create_new_valid_user = (req, res) => {
   const { uname, fname, lname, email, number, pass1, profile } = req.params
-  const formated = "f_auto,q_auto,w_150,h-150,c_fill"
-  const profile_pic_url = `https://res.cloudinary.com/dywlkeqqx/image/upload/${formated}/v1747462695/users/${profile}`
+  const my_profile = profile.split("~~~")[0];
+  const my_version = profile.split("~~~")[1];
+  const formated = "f_auto,q_auto,w_150,h_150,c_fill"
+  const profile_pic_url = `https://res.cloudinary.com/dywlkeqqx/image/upload/${formated}/${my_version}/users/${my_profile}`
   console.log(req.params);
   const user = new User({
     username: uname,
