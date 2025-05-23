@@ -1,5 +1,5 @@
-// const HOST_URL = "https://eliud-backend-server.onrender.com"
-const HOST_URL = "https://localhost:1000"
+const HOST_URL = "https://eliud-backend-server.onrender.com"
+//const HOST_URL = "https://localhost:1000"
 
 const Activity = require("../connection.js").activityColl
 const jwt = require('jsonwebtoken');
