@@ -46,21 +46,20 @@ const activitySchema = new mongoose.Schema({
         }],
         pending: [{
             order_id: { type: String, required: true, default: "nothing" },
-            status: { type: String, required: true, default: "nothing" }
+            status: { type: Number, required: true, default: 0 }
         }],
         delivrly: [{
             _id: { type: String, required: true, default: "nothing" },
             date2: { type: String, required: true, default: "nothing" },
-            status: { type: String, required: true, default: "nothing" }
+            status: { type: Number, required: true, default: 0 }
         }],
         history: [{
             order: { type: String, required: true, default: "nothing" },
             date3: { type: String, required: true, default: "nothing" },
-            status: { type: String, required: true, default: "nothing" }
+            status: { type: Number, required: true, default: 0 }
         }]
     }
 })
-
 const activityColl = new mongoose.model("Activity", activitySchema);
 
 
@@ -72,7 +71,6 @@ const productSchema = new mongoose.Schema({
     quantity: { type: Number, required: true },
     image: { type: String, required: true, default: "no image" },
     public_id: { type: String, required: true, default: "no public id" },
-    category: { type: String, required: true, default: "main products" },
     more: {
         name: { type: String, required: true },
         info1: [{ type: String, required: true }],
@@ -80,7 +78,6 @@ const productSchema = new mongoose.Schema({
         link: { type: String, default: "no link" },
     }
 }, { timestamps: true });
-
 const productColl = mongoose.model("Productdata", productSchema);
 
 
@@ -102,8 +99,14 @@ const userColl = mongoose.model("Userdata", userSchema);
 
 
 mongoose.connect(process.env.CONNECTION_URI)
-    .then(() => {
+    .then(async () => {
         console.log("mongodb connected successfully.")
+        await Promise.all([
+            categoryColl.init(),
+            activityColl.init(),
+            productColl.init(),
+            userColl.init()
+        ]);
     })
     .catch((err) => {
         console.log("ERR: mongodb not connected successfully" + err)
