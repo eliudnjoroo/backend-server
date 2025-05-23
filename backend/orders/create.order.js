@@ -35,7 +35,7 @@ const create_new_order = (req, res) => {
             }
             const new_pending = {
                 order_id: order_id1,
-                status: "not-approved",
+                status: 0,
             }
             const actual_order = [...data.orders.orders, new_order]
             const pending_order = [...data.orders.pending, new_pending]
@@ -66,7 +66,9 @@ const create_new_order = (req, res) => {
 const cancel_old_order = (req, res) => {
     const { username, order_id } = req.params
     Activity.findOne({ user: username })
-        .then()
+        .then(data => {
+            
+        })
         .catch(err => res.json({ fatError: err }))
 }
 
