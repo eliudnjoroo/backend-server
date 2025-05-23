@@ -23,7 +23,9 @@ app.use(cors({
   origin: [
     'https://eliud-backend-server.onrender.com',
     'https://localhost:1000',
-    'http://127.0.0.1:5500'
+    'http://127.0.0.1:5500',
+    'https://electronics.3liud.org',
+    'https://3liud.org'
   ],
   credentials: true
 }));
