@@ -117,8 +117,10 @@ const verify_new_email = async ( req, res ) => {
     console.log("result of email verify: ", result)
     if(result.error){
       res.status(402).json({success: false, data: result})
+      console.log("result of email verify error : ", result)
     }else{
       res.status(201).json({success: true, data: result})
+      console.log("result of email verify success: ", result)
     }
   })
   .catch( err => {
