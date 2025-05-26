@@ -6,7 +6,7 @@ const fs = require('fs');
 const compression = require('compression');
 const cookieParser = require('cookie-parser');
 
-const { find_user_by_phone, find_user_by_name, find_user_by_mail, create_new_valid_user, save_profile_to_system_middle_ware, save_profile_to_system } = require('./backend/users/create.user.js');
+const { verify_new_email, complete_verify_new_email, find_user_by_phone, find_user_by_name, find_user_by_mail, create_new_valid_user, save_profile_to_system_middle_ware, save_profile_to_system } = require('./backend/users/create.user.js');
 const { log_in_user, log_out_user, fetch_user_details } = require("./backend/users/log.user.js");
 const { create_new_valid_product, save_image_to_system, save_image_to_system_middle_ware } = require("./backend/products/create.product.js");
 const { get_products_for_display, get_product_for_display } = require("./backend/products/display.product.js");
@@ -45,6 +45,8 @@ app.use("/api/email/verify_order/", express.static(process.cwd()+"/views/"))
 app.get("/user/checkphone/:phone", find_user_by_phone);
 app.get("/user/checkname/:username", find_user_by_name);
 app.get("/user/checkemail/:myemail", find_user_by_mail);
+app.get("/user/verify/email/:email/:user", verify_new_email);
+app.get("/user/verify/complete/:user/:email/:token", complete_verify_new_email);
 app.get("/alien/home/:uNameL/:uPassL", log_in_user);
 app.get("/user/logout/:user", log_out_user);
 app.get("/alien/details/:user", fetch_user_details);
@@ -92,16 +94,16 @@ app.get('/client', (req, res) => {
 });
 
 //ssl/tsl certifictes for https local validation
-// const options = {
-//   key: fs.readFileSync(process.cwd()+'/localhost+3-key.pem'),    // your private key
-//   cert: fs.readFileSync(process.cwd()+'/localhost+3.pem')   // your certificate
-// };
+const options = {
+  key: fs.readFileSync(process.cwd()+'/localhost+3-key.pem'),    // your private key
+  cert: fs.readFileSync(process.cwd()+'/localhost+3.pem')   // your certificate
+};
 
-// // starting ap with https connection
-// https.createServer(options, app).listen(1000, () => {
-//   console.log('HTTPS server running on https://localhost:1000');
-// });
-
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Server is running on port ${process.env.PORT || 3000}`);
+// starting ap with https connection
+https.createServer(options, app).listen(1000, () => {
+  console.log('HTTPS server running on https://localhost:1000');
 });
+
+// app.listen(process.env.PORT || 3000, () => {
+//   console.log(`Server is running on port ${process.env.PORT || 3000}`);
+// });
