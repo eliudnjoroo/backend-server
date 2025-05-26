@@ -1,8 +1,13 @@
+const HOST_URL = process.env.LIVE_BACKEND_URL;
+
 const User = require("../connection.js").userColl
 require("dotenv").config()
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
 const { CloudinaryStorage } = require("multer-storage-cloudinary")
+const { Resend } = require("resend");
+const jwt = require("jsonwebtoken")
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -75,6 +80,7 @@ const create_new_valid_user = (req, res) => {
   console.log(req.params);
   const user = new User({
     username: uname,
+    auth: false,
     first_name: fname,
     last_name: lname,
     email: email,
@@ -84,10 +90,58 @@ const create_new_valid_user = (req, res) => {
   })
   user.save();
   console.log(uname + " created account succefully")
-  res.status(201).json({ message: `welcome ${uname}, your account was created succefully. you can now login.` });
+  res.status(201).json({ message: `welcome ${uname}, your account was created succefully. please head to your email's inbox and verify your email to continue.`});
+}
+
+const verify_new_email = async ( req, res ) => {
+  const { email, user } = req.params;
+  const token = jwt.sign({user,email}, process.env.JWT_SECRET, { expiresIn: "1h" });
+  console.log(token);
+  await resend.emails.send({
+     from: 'electronics-ke <electronics.hello@3liud.org>',
+     to: email,
+     subject: `Email verification for ${user}`,
+     html: `
+      <div style="text-align: center;">
+       <h2>Hello ${user}, welcome to our platform. please verify your account by clickking the button below<h2>
+       <a href="${HOST_URL}/user/verify/complete/${user}/${email}/${token}"><button>verify my email</button></a>
+       <h3>this link is only valid for 1 hour exactly after the account was created and cannot be reused.</h3>
+       <h4>thanks for joinining our platform and we are dedicated to offering you the best and legit products</h4>
+       <h2>if you did not initiate the creation of a new accout it means someone tried to use it and you can ignore this email</h2>
+       <br>
+       <p>yours trully, electronics-ke</p>
+      </div>
+     `
+  })
+  .then( result => {
+    console.log("result of email verify: ", result)
+    if(result.error){
+      res.status(402).json({success: false, data: result})
+    }else{
+      res.status(201).json({success: true, data: result})
+    }
+  })
+  .catch( err => {
+    console.log("error of email verify: ", err)
+    res.status(422).json({success: false, error: err})
+  })
+}
+
+const complete_verify_new_email = async ( req, res ) => {
+  const { user, email, token } = req.params;
+  const payload = jwt.verify(token, process.env.JWT_SECRET);
+  await User.findOneAndUpdate({ username: user, email },{ auth: true }, { new: true })
+  .then( ans=> {
+    console.log("payload: " + JSON.stringify(payload));
+    res.sendFile(process.cwd() + "/views/verified.user.html")
+  })
+  .catch( err => {
+    res.sendFile(process.cwd() + "/views/error.user.html")
+    console.error('Invalid or expired token: ' + err);
+  })
 }
 
 module.exports = {
-  find_user_by_phone, find_user_by_name, find_user_by_mail,
+  verify_new_email, complete_verify_new_email, find_user_by_phone, find_user_by_name, find_user_by_mail,
   create_new_valid_user, save_profile_to_system_middle_ware, save_profile_to_system
 } 

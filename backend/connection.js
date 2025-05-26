@@ -83,6 +83,7 @@ const productColl = mongoose.model("Productdata", productSchema);
 
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
+    auth: { type: Boolean, required: true, default: false },
     acc_type: { type: String, required: true, default: "customer" },
     first_name: { type: String, required: true },
     last_name: { type: String, required: true },

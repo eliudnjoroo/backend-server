@@ -1,5 +1,4 @@
-const HOST_URL = "https://eliud-backend-server.onrender.com"
-//const HOST_URL = "https://localhost:1000"
+const HOST_URL = process.env.LIVE_BACKEND_URL;
 
 const Activity = require("../connection.js").activityColl
 const jwt = require('jsonwebtoken');
@@ -13,12 +12,11 @@ function generateToken(payload) {
 }
 
 const confirm_order_email_send = async (req, res) => {
-    const { user, email_recieve, order, ext_order, cost } = req.query
-    console.log("Received ext_order: ", ext_order);
+    const { user, email_recieve, order, ext_order, cost } = req.query;
     let cool = (ext_order || "").trim();
     if (cool == "wow") {
         await resend.emails.send({
-            from: 'electronics-ke <hello@3liud.org>',
+            from: 'electronics-ke <electronics.hello@3liud.org>',
             to: email_recieve,
             subject: `Email used for order confirmed`,
             html: `
