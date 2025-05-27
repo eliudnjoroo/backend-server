@@ -3,11 +3,11 @@ const User = require("../connection.js").userColl
 //loging in user
 const log_in_user = (req, res) => {
   const { uNameL, uPassL } = req.params
+  console.log(`${uNameL} tried using ${uPassL} to login.`);
   User.find({ username: `${uNameL}`, password: `${uPassL}` })
     .select("-password")
     .then(response => {
       if (response.length > 0) {
-        console.log("response.auth: => " + response[0].auth);
         if (!response[0].auth) {
           res.status(401).json({ credentials: "correct", message: "account not verified", email:response[0].email });
           console.log(uNameL + " was not logged in due to auth issue");
