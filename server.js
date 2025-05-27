@@ -94,16 +94,16 @@ app.get('/client', (req, res) => {
 });
 
 //ssl/tsl certifictes for https local validation
-// const options = {
-//   key: fs.readFileSync(process.cwd()+'/localhost+3-key.pem'),    // your private key
-//   cert: fs.readFileSync(process.cwd()+'/localhost+3.pem')   // your certificate
-// };
+const options = {
+  key: fs.readFileSync(process.cwd()+'/localhost+3-key.pem'),    // your private key
+  cert: fs.readFileSync(process.cwd()+'/localhost+3.pem')   // your certificate
+};
 
-// // starting ap with https connection
-// https.createServer(options, app).listen(1000, () => {
-//   console.log('HTTPS server running on https://localhost:1000');
-// });
-
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Server is running on port ${process.env.PORT || 3000}`);
+// starting ap with https connection
+https.createServer(options, app).listen(1000, () => {
+  console.log('HTTPS server running on https://localhost:1000');
 });
+
+// app.listen(process.env.PORT || 3000, () => {
+//   console.log(`Server is running on port ${process.env.PORT || 3000}`);
+// });
