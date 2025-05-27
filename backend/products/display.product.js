@@ -3,7 +3,6 @@ const HOST_URL = process.env.LIVE_BACKEND_URL;
 const Product = require("../connection.js").productColl
 
 const get_products_for_display = async (req, res) => {
-  await fetch(`${HOST_URL}/client`)
   await Product.find({})
     .then(products => {
       console.log("all products fetched")
