@@ -120,7 +120,7 @@ const verify_new_email = async ( req, res ) => {
       console.log(`error level 1/=>${result}\n result of email (${email}) verify for/=>${user}\n`)
     }else{
       res.status(201).json({success: true, data: result})
-      console.log(`success/=>${result}\n result of email (${email}) verify for/=>${user}\n`)
+      console.log(`success/=>${JSON.stringify(result)}\n result of email (${email}) verify for/=>${user}\n`)
     }
   })
   .catch( err => {
