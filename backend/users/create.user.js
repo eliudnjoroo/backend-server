@@ -97,7 +97,7 @@ const create_new_valid_user = (req, res) => {
 const verify_new_email = async ( req, res ) => {
   const { email, user } = req.params;
   const token = jwt.sign({user,email}, process.env.JWT_SECRET, { expiresIn: "1h" });
-  console.log(token);
+  console.log(`token generated => [${token}]\nfor email => [${email}]\nby user => [${user}]`);
   await resend.emails.send({
      from: 'electronics-ke <electronics.hello@3liud.org>',
      to: email,
