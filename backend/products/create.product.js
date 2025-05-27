@@ -1,3 +1,5 @@
+const IMAGE_URL = process.env.COUDINARY_IMAGE_URL;
+
 // productController.js
 require("dotenv").config();
 const Product = require("../connection.js").productColl;
@@ -44,7 +46,7 @@ const save_image_to_system = async (req, res) => {
     res.json({
         success: true,
         message: "File uploaded",
-        url: `https://res.cloudinary.com/dywlkeqqx/image/upload/${formated}/v1747462695/products/${product}`,        // URL for frontend use
+        url: `${IMAGE_URL}/image/upload/${formated}/v1747462695/products/${product}`,        // URL for frontend use
         public_id: req.file.filename // For future deletions if needed
     });
 };
@@ -88,7 +90,7 @@ module.exports = {
 
 //for dev
 /*
-const HOST_URL = "https://eliud-backend-server.onrender.com"
+const HOST_URL = process.env.LIVE_BACKEND_URL;
 
 const Product = require("../connection.js").productColl
 const multer = require('multer');

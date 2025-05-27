@@ -1,4 +1,5 @@
 const HOST_URL = process.env.LIVE_BACKEND_URL;
+const IMAGE_URL = process.env.COUDINARY_IMAGE_URL;
 
 const User = require("../connection.js").userColl
 require("dotenv").config()
@@ -76,7 +77,7 @@ const create_new_valid_user = (req, res) => {
   const my_profile = profile.split("~~~")[0];
   const my_version = profile.split("~~~")[1];
   const formated = "f_auto,q_auto,w_150,h_150,c_fill"
-  const profile_pic_url = `https://res.cloudinary.com/dywlkeqqx/image/upload/${formated}/${my_version}/users/${my_profile}`
+  const profile_pic_url = `${IMAGE_URL}/image/upload/${formated}/${my_version}/users/${my_profile}`
   console.log(req.params);
   const user = new User({
     username: uname,
@@ -114,17 +115,16 @@ const verify_new_email = async ( req, res ) => {
      `
   })
   .then( result => {
-    console.log("result of email verify: ", result)
     if(result.error){
       res.status(402).json({success: false, data: result})
-      console.log("result of email verify error : ", result)
+      console.log(`error level 1/=>${result}\n result of email (${email}) verify for/=>${user}\n`)
     }else{
       res.status(201).json({success: true, data: result})
-      console.log("result of email verify success: ", result)
+      console.log(`success/=>${result}\n result of email (${email}) verify for/=>${user}\n`)
     }
   })
   .catch( err => {
-    console.log("error of email verify: ", err)
+    console.log(`error level 0/=>${err}\n result of email (${email}) verify for/=>${user}\n`)
     res.status(422).json({success: false, error: err})
   })
 }
