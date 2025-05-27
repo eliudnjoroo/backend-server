@@ -87,6 +87,7 @@ app.get("/health/:source", (req, res) => {
   console.log("pinged:=> succefull, source: " + req.params.source);
 });
 
+app.set('trust proxy', true);
 app.get('/client', (req, res) => {
   const ip = req.headers['x-forwarded-for']?.split(',').shift() || req.socket?.remoteAddress;
   console.log('Client IP:', ip);
