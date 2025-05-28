@@ -1,7 +1,7 @@
+require("dotenv").config();
 const IMAGE_URL = process.env.COUDINARY_IMAGE_URL;
 
 // productController.js
-require("dotenv").config();
 const Product = require("../connection.js").productColl;
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;

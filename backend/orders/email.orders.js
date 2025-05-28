@@ -1,9 +1,9 @@
+require('dotenv').config();
 const HOST_URL = process.env.LIVE_BACKEND_URL;
 
 const Activity = require("../connection.js").activityColl
 const jwt = require('jsonwebtoken');
 const { Resend } = require('resend');
-require('dotenv').config();
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
