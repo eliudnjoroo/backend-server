@@ -4,11 +4,12 @@
   "description": "server for best shop ",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "author": "eliud njoroo",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "best-shop": "file:",
     "cloudinary": "^1.41.3",
     "compression": "^1.8.0",

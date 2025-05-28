@@ -1,24 +1,40 @@
 const User = require("../connection.js").userColl
+const bcrypt = require("bcrypt");
 
 //loging in user
 const log_in_user = (req, res) => {
-  const { uNameL, uPassL } = req.params
+  const { uNameL, uPassL } = req.body
   console.log(`${uNameL} tried using ${uPassL} to login.`);
-  User.find({ username: `${uNameL}`, password: `${uPassL}` })
-    .select("-password")
+  User.find({ $or: [{ username: uNameL }, { email: uNameL }] })
     .then(response => {
       if (response.length > 0) {
-        if (!response[0].auth) {
-          res.status(401).json({ credentials: "correct", message: "account not verified", email:response[0].email });
-          console.log(uNameL + " was not logged in due to auth issue");
-        } else {
-          res.status(200).json({ credentials: "correct" });
-          console.log(uNameL + " was logged in");
-        }
+        bcrypt.compare(uPassL, response[0].password, (err, pass) => {
+          if (err) {
+            console.error("bcrypt error:", err);
+            res.status(401).json({ credentials: "error", message: "Internal error" });
+            return
+          }
+          if (!pass) {
+            res.status(401).json({ credentials: "wrong",  message: "wrong password" });
+            console.log(uNameL + " was not allowes to logged in(wrong-password)")
+          }
+          else if (!response[0].auth) {
+            res.status(401).json({ credentials: "correct", message: "account not verified", email: response[0].email });
+            console.log(uNameL + " was not logged in due to auth issue");
+          } 
+          else{
+            res.status(200).json({ credentials: "correct", name: response[0].username });
+            console.log(uNameL + " was logged in");
+          }   
+        })
       }
       else {
-        res.json({ credentials: "wrong" });
-        console.log(uNameL + " was not allowes to logged in")
+        let message = "incorrect username"
+        if(/[@]/.test(uNameL)){
+          message = "incorrect email"
+        }
+        res.status(401).json({ credentials: "wrong", message });
+        console.log(uNameL + " was not allowes to logged in(wrong-user)")
       }
     })
 }

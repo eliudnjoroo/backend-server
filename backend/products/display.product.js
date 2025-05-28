@@ -1,5 +1,3 @@
-const HOST_URL = process.env.LIVE_BACKEND_URL;
-
 const Product = require("../connection.js").productColl
 
 const get_products_for_display = async (req, res) => {

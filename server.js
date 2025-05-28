@@ -47,7 +47,7 @@ app.get("/user/checkname/:username", find_user_by_name);
 app.get("/user/checkemail/:myemail", find_user_by_mail);
 app.get("/user/verify/email/:email/:user", verify_new_email);
 app.get("/user/verify/complete/:user/:email/:token", complete_verify_new_email);
-app.get("/alien/home/:uNameL/:uPassL", log_in_user);
+app.post("/alien/home", log_in_user);
 app.get("/user/logout/:user", log_out_user);
 app.get("/alien/details/:user", fetch_user_details);
 app.post("/api/profile_image/save", save_profile_to_system_middle_ware, save_profile_to_system);
