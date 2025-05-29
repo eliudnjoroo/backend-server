@@ -118,8 +118,13 @@ const verify_new_email = async (req, res) => {
   })
     .then(result => {
       if (result.error) {
-        res.status(402).json({ success: false, data: result })
-        console.log(`error level 1/=>${JSON.stringify(result)}\n result of email (${email}) verify for/=>${user}\n`)
+        if(result.error.name == "application_error"){
+          res.status(401).json({ success: false, data: result })
+          console.log(`error level 1/=>${JSON.stringify(result)}\n result of email (${email}) verify for/=>${user}\n`)
+        }else{
+          res.status(402).json({ success: false, data: result })
+          console.log(`error level 1/=>${JSON.stringify(result)}\n result of email (${email}) verify for/=>${user}\n`)
+        }
       } else {
         res.status(201).json({ success: true, data: result })
         console.log(`success/=>${JSON.stringify(result)}\n result of email (${email}) verify for/=>${user}\n`)
