@@ -109,7 +109,7 @@ app.get('/client', (req, res) => {
       ip = []
     }, 600000);
   }
-  res.status(200).json({});
+  res.status(200).json();
 });
 
 //ssl/tsl certifictes for https local validation
