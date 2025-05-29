@@ -70,7 +70,7 @@ const create_new_valid_product = async (req, res) => {
 
     try {
         const saved = await product.save();
-        console.log("saved ne product called ", name);
+        console.log("saved new product called ", name);
         res.json({ success: "true", name, detail: saved });
     } catch (err) {
         console.error("error saving product", err);

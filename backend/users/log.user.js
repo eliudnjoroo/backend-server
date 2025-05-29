@@ -4,13 +4,12 @@ const bcrypt = require("bcrypt");
 //loging in user
 const log_in_user = (req, res) => {
   const { uNameL, uPassL } = req.body
-  console.log(`${uNameL} tried using ${uPassL} to login.`);
   User.find({ $or: [{ username: uNameL }, { email: uNameL }] })
     .then(response => {
       if (response.length > 0) {
         bcrypt.compare(uPassL, response[0].password, (err, pass) => {
           if (err) {
-            console.error("bcrypt error:", err);
+            console.error("bcrypt error:=> ",err);
             res.status(401).json({ credentials: "error", message: "Internal error" });
             return
           }
@@ -20,7 +19,7 @@ const log_in_user = (req, res) => {
           }
           else if (!response[0].auth) {
             res.status(401).json({ credentials: "correct", message: "account not verified", email: response[0].email });
-            console.log(uNameL + " was not logged in due to auth issue");
+            console.log(uNameL + " was not logged in(auth-issue)");
           } 
           else{
             res.status(200).json({ credentials: "correct", name: response[0].username });

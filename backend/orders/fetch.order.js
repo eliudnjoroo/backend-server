@@ -31,12 +31,11 @@ const check_if_in_orders = (req, res) => {
                     history_arr.push([hist_id, hist_state])
                 });
             }
-            console.log(history)
             res.json({ pending, delivery, history, pending_arr, delivery_arr, history_arr });
         })
         .catch(err => {
             res.json({ fatError: err })
-            console.log(err)
+            console.log("error in fetch.order.js :=> "+err)
         })
 }
 
@@ -57,7 +56,7 @@ const collect_if_in_orders = (req, res) => {
             res.json({ order_object, unique_id, date })
         })
         .catch(err => { 
-            console.log( "fatest_Error: ", err )
+            console.log("error in fetch.order.js :=> "+err)
             res.json({ fatest_Error: err })}
         )
 }

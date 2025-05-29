@@ -28,7 +28,6 @@ const confirm_order_email_send = async (req, res) => {
             `
         })
             .then(async data => {
-                console.log("data org: ", data)
                 if( data.error ){
                     return res.status(422).json({ success: false });
                 }
@@ -45,14 +44,13 @@ const confirm_order_email_send = async (req, res) => {
                 res.json({ success: true, data, toOrg: "yes" })
             })
             .catch(err => {
-                console.error("Fallback Email Error: ", err);
                 res.status(422).json({ success: false, err })
             })
         return;
     } 
     else {
         const token = generateToken({ user });
-        console.log("token: " + token)
+        console.log("token gen for pur ver " + user)
         try {
             const { data, error } = await resend.emails.send({
                 from: 'electronics-ke <hello@3liud.org>',
@@ -69,13 +67,11 @@ const confirm_order_email_send = async (req, res) => {
             });
 
             if (error) {
-                console.error('Resend Error:', error);
                 return res.json({ success: false, error });
             }
 
             res.json({ success: true, data });
         } catch (err) {
-            console.error(err);
             res.status(422).json({ success: false, error: err });
         }
     }
@@ -93,7 +89,6 @@ const verify_order_token = async (req, res) => {
                 let now_orders = []
                 res1.orders.pending.forEach(order => {
                     if (order.order_id == _order) {
-                        console.log("id: ", _order)
                         const updated_order = {
                             order_id: order.order_id,
                             status: 1,
@@ -113,12 +108,12 @@ const verify_order_token = async (req, res) => {
                 }
                 await Activity.findOneAndUpdate({ user }, { orders: new_orders }, { new: true })
                     .then(res2 => {
-                        console.log("payload: " + JSON.stringify(payload));
+                        console.log(`order verifed for ${user}`);
                         res.sendFile(process.cwd() + "/views/verified.order.html")
                     })
             })
     } catch (err) {
-        console.error('Invalid or expired token: ' + err);
+        console.log(`order not verifed for ${user}`);
         res.sendFile(process.cwd() + "/views/error.order.html")
     }
 }
