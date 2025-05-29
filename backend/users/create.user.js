@@ -80,7 +80,6 @@ const create_new_valid_user = async (req, res) => {
   const my_version = profile.split("~~~")[1];
   const formated = "f_auto,q_auto,w_150,h_150,c_fill"
   const profile_pic_url = `${IMAGE_URL}/image/upload/${formated}/${my_version}/users/${my_profile}`
-  console.log(req.params);
   const user = new User({
     username: uname,
     auth: false,
@@ -99,7 +98,7 @@ const create_new_valid_user = async (req, res) => {
 const verify_new_email = async (req, res) => {
   const { email, user } = req.params;
   const token = jwt.sign({ user, email }, process.env.JWT_SECRET, { expiresIn: "1h" });
-  console.log(`token generated => [${token}]\nfor email => [${email}]\nby user => [${user}]`);
+  console.log(`token gen for email ver => [${email}] by user => [${user}]`);
   await resend.emails.send({
     from: 'electronics-ke <electronics.hello@3liud.org>',
     to: email,
@@ -120,37 +119,31 @@ const verify_new_email = async (req, res) => {
       if (result.error) {
         if(result.error.name == "application_error"){
           res.status(401).json({ success: false, data: result })
-          console.log(`error level 1/=>${JSON.stringify(result)}\n result of email (${email}) verify for/=>${user}\n`)
         }else{
           res.status(402).json({ success: false, data: result })
-          console.log(`error level 1/=>${JSON.stringify(result)}\n result of email (${email}) verify for/=>${user}\n`)
         }
       } else {
         res.status(201).json({ success: true, data: result })
-        console.log(`success/=>${JSON.stringify(result)}\n result of email (${email}) verify for/=>${user}\n`)
       }
     })
     .catch(err => {
-      console.log(`error level 0/=>${err}\n result of email (${email}) verify for/=>${user}\n`)
       res.status(422).json({ success: false, error: err })
     })
 }
 
 const complete_verify_new_email = async (req, res) => {
   const { user, email, token } = req.params;
+  console.log(`tried token ver for email ver => [${email}] by user => [${user}]`);
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     await User.findOneAndUpdate({ username: user, email }, { auth: true }, { new: true })
       .then(ans => {
-        console.log("payload: " + JSON.stringify(payload));
         res.sendFile(process.cwd() + "/views/verified.user.html")
       })
       .catch(err => {
-        console.error('server error: ' + err);
         res.sendFile(process.cwd() + "/views/error.user.html");
       })
   } catch (err){
-    console.error('Invalid or expired token: ' + err);
     res.sendFile(process.cwd() + "/views/error.user.html");
   }
 }

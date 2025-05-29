@@ -30,7 +30,7 @@ app.use(cors({
   credentials: true
 }));
 app.use((err, req, res, next) => {
-  console.error(err);
+  console.error("gen err =>"+err);
   res.status(500).json({ error: err.message, stack: err.stack });
 });
 app.use(cookieParser());
@@ -39,7 +39,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(compression());
 app.disable('x-powered-by');
 //app.use("/alien/details/",express.static(process.cwd()+"/backend/images/"));
-app.use("/api/email/verify_order/", express.static(process.cwd()+"/views/"))
+app.use("/api/email/verify_order/", express.static(process.cwd() + "/views/"))
 
 /* all user paths */
 app.get("/user/checkphone/:phone", find_user_by_phone);
@@ -79,25 +79,43 @@ app.get("/api/order/check/:username", check_if_in_orders);
 app.get("/api/order/get/:username/:order_id", collect_if_in_orders);
 
 /* all mail paths */
-app.get("/api/email/create_order", confirm_order_email_send );
-app.get("/api/email/verify_order", verify_order_token );
+app.get("/api/email/create_order", confirm_order_email_send);
+app.get("/api/email/verify_order", verify_order_token);
 
 app.get("/health/:source", (req, res) => {
   res.json({ cool: "pinged:=> succefull" });
-  console.log("pinged:=> succefull, source: " + req.params.source);
+  console.log("ping => " + req.params.source);
 });
 
+let number = 0;
+let time;
+let ip = [];
 app.set('trust proxy', true);
 app.get('/client', (req, res) => {
-  const ip = req.headers['x-forwarded-for']?.split(',').shift() || req.socket?.remoteAddress;
-  console.log('Client IP:', ip);
-  res.json({ message: `your_IP_is: => ${ip}` });
+  //console.log("time: ",time)
+  clearTimeout(time);
+  number++
+  const new_ip = req.headers['x-forwarded-for']?.split(',').shift() || req.socket?.remoteAddress;
+  if(!ip.includes(new_ip)){
+    number = 1;
+    ip.push(new_ip);
+  }
+  const timestamp = new Date();
+  if (number == 1) {
+    console.log(`atart IP: ${ip} + t ${timestamp}`);
+  } else {
+    time = setTimeout(() => {
+      console.log(`end IP: ${ip} t ${timestamp}`);
+      ip = []
+    }, 600000);
+  }
+  res.status(200).json();
 });
 
 //ssl/tsl certifictes for https local validation
 const options = {
-  key: fs.readFileSync(process.cwd()+'/localhost+3-key.pem'),    // your private key
-  cert: fs.readFileSync(process.cwd()+'/localhost+3.pem')   // your certificate
+  key: fs.readFileSync(process.cwd() + '/localhost+3-key.pem'),    // your private key
+  cert: fs.readFileSync(process.cwd() + '/localhost+3.pem')   // your certificate
 };
 
 // starting ap with https connection

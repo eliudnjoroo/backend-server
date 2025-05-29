@@ -2,7 +2,7 @@ const Activity = require("../connection.js").activityColl
 
 const create_new_order = (req, res) => {
     const { username, date, quantity, total, discount, net, tax, cost, location, contacts } = req.params;
-    console.log("location.country: ",location.split("~~~")[0])
+    console.log("order from "+location.split("~~~")[0]+" by "+username)
     const location101 = {
         country: location.split("~~~")[0],
         county: location.split("~~~")[1],
@@ -16,7 +16,6 @@ const create_new_order = (req, res) => {
     Activity.findOne({ user: username })
         .then(data => {
             let order_id1 = data.orders.orders.length + 1;
-            console.log("order_id: " + order_id1)
             const raw_order = data.cart
             const new_order = {
                 order_id: order_id1,
@@ -54,12 +53,12 @@ const create_new_order = (req, res) => {
                 .then(response => res.json({ response }))
                 .catch(err => {
                     res.json({ fatError1: err })
-                    console.log("err1: " + err)
+                    console.log("err1 in create.order.js :=>" + err)
                 })
         })
         .catch(err => {
             res.json({ fatError2: err })
-            console.log("err2: " + err)
+            console.log("err2 in create.order.js :=> " + err)
         })
 }
 

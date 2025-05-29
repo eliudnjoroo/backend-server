@@ -1,5 +1,4 @@
 const Activity = require("../connection").activityColl;
-
 const update_cart_item_count = async (req, res) => {
     const { user, product, action } = req.params;
     let new_cart_array;
@@ -7,7 +6,6 @@ const update_cart_item_count = async (req, res) => {
     await Activity.findOne({ user: user })
         .then(data => {
             new_cart_array = data.cart.map(( cart_product, i )=> {
-                console.log(i)
                 if (cart_product.product_name == product) {
                     index = i;
                     old_number = Number(cart_product.product_count)
