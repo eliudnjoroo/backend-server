@@ -103,10 +103,10 @@ app.get('/client', (req, res) => {
   }
   const timestamp = new Date();
   if (number == 1) {
-    console.log(`atart IP: ${ip} + t ${timestamp}`);
+    console.log(`Start sesion IP: ${ip} + t ${timestamp}`);
   } else {
     time = setTimeout(() => {
-      console.log(`end IP: ${ip} t ${timestamp}`);
+      console.log(`End sesion IP: ${ip} t ${timestamp}`);
       ip = []
     }, 600000);
   }
