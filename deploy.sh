@@ -29,4 +29,5 @@ else
     echo now in master.
 
     echo -e "\n~~~~~ finished auto deploying ~~~~~\n"
+    npm start
 fi
