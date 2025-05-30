@@ -25,11 +25,7 @@ else
     git push
     git status
     git checkout master
-<<<<<<< HEAD
-    echo now in master
-=======
     echo now in master.
->>>>>>> master
 
     echo -e "\n~~~~~ finished auto deploying ~~~~~\n"
 fi
