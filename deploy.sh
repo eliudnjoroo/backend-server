@@ -12,16 +12,16 @@ then
     exit 1
 else
     echo commiting to master. message = $MESSAGE
-    git commit -m $MESSAGE
+    git commit -m "$MESSAGE"
     echo  -e "\n~~~~~pushing from master. message = $MESSAGE~~~~~"
     git push
     git status
     git checkout main
     echo  -e "\n~~~~~now in main~~~~~"
-    git merge master -m $MESSAGE
+    git merge master -m "$MESSAGE"
     git add -A
     echo  -e "\n~~~~~commiting to main. message = $MESSAGE~~~~~"
-    git commit -m $MESSAGE
+    git commit -m "$MESSAGE"
     echo  -e "\n~~~~~pushing from main. message = $MESSAGE~~~~~" 
     git push
     git status
