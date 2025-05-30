@@ -84,7 +84,7 @@ app.get("/api/email/create_order", confirm_order_email_send);
 app.get("/api/email/verify_order", verify_order_token);
 
 app.get("/health/:source", (req, res) => {
-  res.json({ cool: "pinged:=> succefull" });
+  res.status(200).json();
   console.log("ping => " + req.params.source);
 });
 
