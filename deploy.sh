@@ -1,5 +1,6 @@
 #!/bin/bash
 clear
+git checkout master
 echo -e "\n~~~~~ auto deploying ~~~~~\n"
 git status
 git add *
