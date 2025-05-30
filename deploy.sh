@@ -7,7 +7,6 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 clear
-echo -e "\n\n\n\n\n\n\n\n\n\n\n\n\n"
 
 # Check if master branch exists
 if ! git rev-parse --verify master >/dev/null 2>&1; then
