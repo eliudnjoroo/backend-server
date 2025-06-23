@@ -42,19 +42,6 @@ app.disable('x-powered-by');
 //app.use("/alien/details/",express.static(process.cwd()+"/backend/images/"));
 app.use("/api/email/verify_order/", express.static(process.cwd() + "/views/"))
 
-/**
- * 
- * start for fcc projects
- * 
- **/
-const issueTrackerApp = require('./__fcc_projects/boilerplate-project-issuetracker/server.js');
-app.use('/fcc/issuetracker', issueTrackerApp);
-/**
- * 
- * end for fcc projects
- * 
- **/
-
 /* all user paths */
 app.get("/user/checkphone/:phone", find_user_by_phone);
 app.get("/user/checkname/:username", find_user_by_name);
