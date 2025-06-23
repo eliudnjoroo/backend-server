@@ -46,20 +46,17 @@ app.use(function (req, res, next) {
     .send('Not Found');
 });
 
-//Start our server and tests!
-const listener = app.listen(process.env.PORT || 2000, function () {
-  console.log('Your app is listening on port ' + listener.address().port);
-  if (process.env.NODE_ENV === 'test') {
-    console.log('Running Tests...');
-    setTimeout(function () {
-      try {
-        runner.run();
-      } catch (e) {
-        console.log('Tests are not valid:');
-        console.error(e);
-      }
-    }, 3500);
-  }
-});
+// Only run tests if this app is launched standalone (optional safety)
+if (process.env.NODE_ENV === 'test' && require.main === module) {
+  console.log('Running Tests...');
+  setTimeout(() => {
+    try {
+      runner.run();
+    } catch (e) {
+      console.log('Tests are not valid:');
+      console.error(e);
+    }
+  }, 3500);
+}
 
 module.exports = app; //for testing
