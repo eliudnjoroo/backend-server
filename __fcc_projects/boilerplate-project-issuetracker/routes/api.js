@@ -12,6 +12,7 @@ module.exports = function (app) {
   app.route('/api/issues/:project')
 
     .get((req, res) => {
+      console.log("get: " + req.headers.host)
       let projects_filtered = projects;
       projects_filtered = projects.filter(pro => {
         if (pro.project !== req.params.project) return false;
@@ -28,6 +29,7 @@ module.exports = function (app) {
     })
 
     .post(function (req, res) {
+      console.log("post: " + req.headers.host)
       let generatdid = `${Math.round(Math.random() * 3214)}ersd${Math.round(Math.random() * 3214)}fsd${dif}fdrw${Math.round(Math.random() * 3214)}`;
       dif += 17
       if (!req.body.issue_title || !req.body.issue_text || !req.body.created_by) {
@@ -63,6 +65,7 @@ module.exports = function (app) {
     })
 
     .put(function (req, res) {
+      console.log("put: " + req.headers.host)
       let id = req.body._id;
       if (!id) {
         return res.json({ error: 'missing _id' })
@@ -99,6 +102,7 @@ module.exports = function (app) {
     })
 
     .delete(function (req, res) {
+      console.log("delete: " + req.headers.host)
       if (!req.body._id) return res.json({ error: 'missing _id' })
       let deleted;
       projects = projects.filter((project) => {

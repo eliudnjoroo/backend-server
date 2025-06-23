@@ -1,5 +1,7 @@
 'use strict';
 
+let baseUrl = "fcc/issuetracker"
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const expect = require('chai').expect;
@@ -15,7 +17,6 @@ let app = express();
 app.use('/public', express.static(process.cwd() + '/__fcc_projects/boilerplate-project-issuetracker/public'));
 
 app.use(cors({ origin: '*' })); //For FCC testing purposes only
-
 
 
 app.use(bodyParser.json());
