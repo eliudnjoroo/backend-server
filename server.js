@@ -36,11 +36,8 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: err.message, stack: err.stack });
 });
 app.use(cookieParser());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 app.use(compression());
 app.disable('x-powered-by');
-//app.use("/alien/details/",express.static(process.cwd()+"/backend/images/"));
 app.use("/api/email/verify_order/", express.static(process.cwd() + "/views/"))
 
 /**
@@ -50,11 +47,14 @@ app.use("/api/email/verify_order/", express.static(process.cwd() + "/views/"))
  **/
 const issueTrackerApp = require('./__fcc_projects/boilerplate-project-issuetracker/server.js');
 app.use('/fcc/issuetracker', issueTrackerApp);
+issueTrackerApp
 /**
  * 
  * end for fcc projects
  * 
  **/
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 /* all user paths */
 app.get("/user/checkphone/:phone", find_user_by_phone);
