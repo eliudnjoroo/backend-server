@@ -138,6 +138,6 @@ app.get('/client', (req, res) => {
 //   console.log('HTTPS server running on https://localhost:1000');
 // });
 
-app.listen(3000, () => {
+app.listen(1000, () => {
   console.log(`Server is running on port ${1000}`);
 });
