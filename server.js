@@ -31,7 +31,7 @@ app.use(cors({
   credentials: true
 }));
 app.use((err, req, res, next) => {
-  console.error("gen err =>"+err);
+  console.error("gen err =>" + err);
   res.status(500).json({ error: err.message, stack: err.stack });
 });
 app.use(cookieParser());
@@ -41,6 +41,19 @@ app.use(compression());
 app.disable('x-powered-by');
 //app.use("/alien/details/",express.static(process.cwd()+"/backend/images/"));
 app.use("/api/email/verify_order/", express.static(process.cwd() + "/views/"))
+
+/**
+ * 
+ * start for fcc projects
+ * 
+ **/
+const issueTrackerApp = require('./__fcc_projects/boilerplate-project-issuetracker/server.js');
+app.use('/fcc/issuetracker', issueTrackerApp);
+/**
+ * 
+ * end for fcc projects
+ * 
+ **/
 
 /* all user paths */
 app.get("/user/checkphone/:phone", find_user_by_phone);
@@ -97,7 +110,7 @@ app.get('/client', (req, res) => {
   clearTimeout(time);
   number++
   const new_ip = req.headers['x-forwarded-for']?.split(',').shift() || req.socket?.remoteAddress;
-  if(!ip.includes(new_ip)){
+  if (!ip.includes(new_ip)) {
     number = 1;
     ip.push(new_ip);
   }
