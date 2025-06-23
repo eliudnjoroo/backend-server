@@ -43,6 +43,19 @@ app.disable('x-powered-by');
 //app.use("/alien/details/",express.static(process.cwd()+"/backend/images/"));
 app.use("/api/email/verify_order/", express.static(process.cwd() + "/views/"))
 
+/**
+ * 
+ * start for fcc projects
+ * 
+ **/
+const issueTrackerApp = require('./__fcc_projects/boilerplate-project-issuetracker/server.js');
+app.use('/fcc/issuetracker', issueTrackerApp);
+/**
+ * 
+ * end for fcc projects
+ * 
+ **/
+
 /* all user paths */
 app.get("/user/checkphone/:phone", find_user_by_phone);
 app.get("/user/checkname/:username", find_user_by_name);
@@ -125,6 +138,6 @@ app.get('/client', (req, res) => {
 //   console.log('HTTPS server running on https://localhost:1000');
 // });
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Server is running on port ${process.env.PORT || 3000}`);
+app.listen(3000, () => {
+  console.log(`Server is running on port ${3000}`);
 });
