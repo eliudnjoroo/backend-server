@@ -1,5 +1,11 @@
-node_modules
 backend/images
-.env
 localhost+3-key.pem
 localhost+3.pem
+
+# Ignore all env files
+.env
+_fcc_projects/**/.env
+
+# Ignore all node_modules
+node_modules/
+_fcc_projects/**/node_modules/
