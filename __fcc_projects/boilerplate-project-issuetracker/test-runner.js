@@ -57,7 +57,6 @@ emitter.run = function () {
   try {
     let runner = mocha.ui('tdd').run()
       .on('test end', function (test) {
-        console.log("cool")
         // remove comments
         let body = test.body.replace(/\/\/.*\n|\/\*.*\*\//g, '');
         // collapse spaces
