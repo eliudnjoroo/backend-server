@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/fcc/issuetracker/public/style.css">
+  <link rel="stylesheet" href="/public/style.css">
 </head>
 
 <body>
@@ -42,7 +42,7 @@
   <hr style='margin: 0 50px'>
   <section id='testui' style='margin-left: 50px;'>
     <h3>Examples</h3>
-    Go to <a href='/fcc/issuetracker/api/issues/apitest/'><code>/api/issues/apitest/</code></a> project
+    Go to <a href='/api/issues/apitest/'><code>/api/issues/apitest/</code></a> project
     <h2 style="text-align: left">API Tests</h2>
     <h3>Submit issue on <i>apitest</i></h3>
     <form id="testForm" class="border">
@@ -79,7 +79,7 @@
     $(function () {
       $('#testForm').submit(function (e) {
         $.ajax({
-          url: '/fcc/issuetracker/api/issues/apitest',
+          url: '/api/issues/apitest',
           type: 'post',
           data: $('#testForm').serialize(),
           success: function (data) {
@@ -90,7 +90,7 @@
       });
       $('#testForm2').submit(function (e) {
         $.ajax({
-          url: '/fcc/issuetracker/api/issues/apitest',
+          url: '/api/issues/apitest',
           type: 'put',
           data: $('#testForm2').serialize(),
           success: function (data) {
@@ -101,7 +101,7 @@
       });
       $('#testForm3').submit(function (e) {
         $.ajax({
-          url: '/fcc/issuetracker/api/issues/apitest',
+          url: '/api/issues/apitest',
           type: 'delete',
           data: $('#testForm3').serialize(),
           success: function (data) {

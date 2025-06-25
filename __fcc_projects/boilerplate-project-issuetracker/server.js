@@ -1,7 +1,5 @@
 'use strict';
 
-let baseUrl = "fcc/issuetracker"
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const expect = require('chai').expect;
@@ -10,13 +8,14 @@ require('dotenv').config();
 
 const apiRoutes = require('./routes/api.js');
 const fccTestingRoutes = require('./routes/fcctesting.js');
-const runner = require('./test-runner.js');
+const runner = require('./test-runner');
 
 let app = express();
 
-app.use('/public', express.static(process.cwd() + '/__fcc_projects/boilerplate-project-issuetracker/public'));
+app.use('/public', express.static(__dirname + '/public'));
 
 app.use(cors({ origin: '*' })); //For FCC testing purposes only
+
 
 
 app.use(bodyParser.json());
@@ -25,13 +24,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //Sample front-end
 app.route('/:project/')
   .get(function (req, res) {
-    res.sendFile(process.cwd() + '/__fcc_projects/boilerplate-project-issuetracker/views/issue.html');
+    res.sendFile(__dirname + '/views/issue.html');
   });
 
 //Index page (static HTML)
 app.route('/')
   .get(function (req, res) {
-    res.sendFile(process.cwd() + '/__fcc_projects/boilerplate-project-issuetracker/views/index.html');
+    res.sendFile(__dirname + '/views/index.html');
   });
 
 //For FCC testing purposes
@@ -47,17 +46,20 @@ app.use(function (req, res, next) {
     .send('Not Found');
 });
 
-// Only run tests if this app is launched standalone (optional safety)
-if (process.env.NODE_ENV === 'test') {
-  console.log('Running Tests...');
-  setTimeout(() => {
-    try {
-      runner.run();
-    } catch (e) {
-      console.log('Tests are not valid:');
-      console.error(e);
-    }
-  }, 3500);
-}
+//Start our server and tests!
+// const listener = app.listen(process.env.PORT || 3000, function () {
+//   console.log('Your app is listening on port ' + listener.address().port);
+//   if (process.env.NODE_ENV === 'test') {
+//     console.log('Running Tests...');
+//     setTimeout(function () {
+//       try {
+//         runner.run();
+//       } catch (e) {
+//         console.log('Tests are not valid:');
+//         console.error(e);
+//       }
+//     }, 3500);
+//   }
+// });
 
 module.exports = app; //for testing

@@ -83,7 +83,7 @@ module.exports = function (app) {
 
       let assigned_to = req.body.assigned_to || edited.assigned_to
       let status_text = req.body.status_text || edited.status_text
-      let open = req.body.open !== undefined ? req.body.open : edited.open;
+      let open = req.body.open !== undefined ? req.body.open == "false" ? false : true : edited.open;
       let _id = req.body._id
       let issue_title = req.body.issue_title || edited.issue_title
       let issue_text = req.body.issue_text || edited.issue_text
