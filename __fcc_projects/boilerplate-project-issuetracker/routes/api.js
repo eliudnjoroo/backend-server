@@ -67,6 +67,7 @@ module.exports = function (app) {
     .put(function (req, res) {
       console.log("put: " + req.headers.host)
       let id = req.body._id;
+      console.log("id: " + id + "\nreq.body: " + JSON.stringify(req.body) + "\n")
       if (!id) {
         return res.json({ error: 'missing _id' })
       }
@@ -103,6 +104,7 @@ module.exports = function (app) {
 
     .delete(function (req, res) {
       console.log("delete: " + req.headers.host)
+      console.log("id: " + req.body._id + "\nreq.body: " + JSON.stringify(req.body) + "\n")
       if (!req.body._id) return res.json({ error: 'missing _id' })
       let deleted;
       projects = projects.filter((project) => {
