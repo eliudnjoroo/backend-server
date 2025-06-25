@@ -48,7 +48,7 @@ app.use(function (req, res, next) {
 });
 
 // Only run tests if this app is launched standalone (optional safety)
-if (process.env.NODE_ENV === 'test' && require.main === module) {
+if (process.env.NODE_ENV === 'test') {
   console.log('Running Tests...');
   setTimeout(() => {
     try {
