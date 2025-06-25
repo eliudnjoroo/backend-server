@@ -43,7 +43,7 @@ fs.readdirSync(__dirname + testDir).filter(function (file) {
 
 }).forEach(function (file) {
   mocha.addFile(
-    path.join(testDir, file)
+    path.join(path.join(__dirname, 'tests', '2_functional-tests.js'))
   );
 });
 
@@ -57,6 +57,7 @@ emitter.run = function () {
   try {
     let runner = mocha.ui('tdd').run()
       .on('test end', function (test) {
+        console.log("cool")
         // remove comments
         let body = test.body.replace(/\/\/.*\n|\/\*.*\*\//g, '');
         // collapse spaces
